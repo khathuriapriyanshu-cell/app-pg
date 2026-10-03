@@ -2,17 +2,17 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { UserPlus, Building2, Plus, CreditCard, Sparkles, Layers } from 'lucide-react';
+import { UserPlus, Building2, Sparkles, Layers } from 'lucide-react';
 import { useDataStore } from '@/services/useStore';
 
 interface QuickActionsProps {
   onAddTenant: () => void;
   onAddPG: () => void;
   onManagePGs: () => void;
-  onAddRoom: () => void;
+  onAddRoom?: () => void;
 }
 
-export function QuickActions({ onAddTenant, onAddPG, onManagePGs, onAddRoom }: QuickActionsProps) {
+export function QuickActions({ onAddTenant, onAddPG, onManagePGs }: QuickActionsProps) {
   const { pgs } = useDataStore();
 
   return (

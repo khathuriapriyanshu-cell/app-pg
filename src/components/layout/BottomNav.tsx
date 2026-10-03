@@ -28,6 +28,8 @@ export function BottomNav() {
             <Link
               key={item.name}
               href={item.href}
+              aria-label={item.name}
+              aria-current={isActive ? 'page' : undefined}
               className={`relative flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all ${
                 isActive ? 'text-indigo-600 font-semibold' : 'text-slate-500 hover:text-slate-800'
               }`}

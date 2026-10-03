@@ -9,6 +9,7 @@ import { NotificationsModal } from '../common/NotificationsModal';
 import { AddTenantModal } from '../tenants/AddTenantModal';
 import { AddPGModal } from '../pg/AddPGModal';
 import { ManagePGsModal } from '../pg/ManagePGsModal';
+import { PWAProvider } from '../common/PWAProvider';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -22,7 +23,8 @@ export function AppShell({ children }: AppShellProps) {
   const [isManagePGsOpen, setIsManagePGsOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex bg-slate-50 text-slate-900 font-sans antialiased">
+    <PWAProvider>
+      <div className="min-h-screen flex bg-slate-50 text-slate-900 font-sans antialiased">
       {/* Sidebar for Desktop */}
       <Sidebar
         onOpenAddStudent={() => setIsAddStudentOpen(true)}
@@ -31,7 +33,7 @@ export function AppShell({ children }: AppShellProps) {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 pb-20 md:pb-6">
+      <div className="flex-1 flex flex-col min-w-0 pb-24 md:pb-6">
         {/* Top Header with Multi-PG Switcher and Add Student button */}
         <Header
           onOpenSearch={() => setIsSearchOpen(true)}
@@ -77,5 +79,6 @@ export function AppShell({ children }: AppShellProps) {
         onOpenAddPG={() => setIsAddPGOpen(true)}
       />
     </div>
-  );
+  </PWAProvider>
+);
 }

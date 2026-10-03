@@ -3,7 +3,6 @@
 import React from 'react';
 import { Bed } from '@/types';
 import { useDataStore } from '@/services/useStore';
-import { User, AlertCircle, Clock, CheckCircle2 } from 'lucide-react';
 
 interface BedCardProps {
   bed: Bed;

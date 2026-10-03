@@ -4,9 +4,7 @@ import React, { useState } from 'react';
 import {
   Sparkles,
   CheckCircle2,
-  Clock,
   ShieldCheck,
-  Building2,
   Save,
   Play,
   RotateCcw,

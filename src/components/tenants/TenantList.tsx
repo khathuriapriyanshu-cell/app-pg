@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Users,
   Search,
@@ -8,11 +8,7 @@ import {
   Send,
   CreditCard,
   ChevronRight,
-  AlertTriangle,
-  Clock,
-  CheckCircle2,
   Edit3,
-  Building2,
 } from 'lucide-react';
 import { Tenant, RentRecord } from '@/types';
 import { useDataStore } from '@/services/useStore';
@@ -25,24 +21,26 @@ import { TenantPaymentSimulationModal } from '../common/TenantPaymentSimulationM
 export function TenantList() {
   const { tenants, pgs, activePgId, setActivePG, getTenantCurrentRent, getRoomById, getBedById, getPGById } = useDataStore();
 
-  const [activeFilter, setActiveFilter] = useState<string>('ALL');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
-  const [editingTenant, setEditingTenant] = useState<Tenant | null>(null);
-  const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
-
-  useEffect(() => {
+  const [activeFilter, setActiveFilter] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      const f = params.get('filter');
-      if (f) setActiveFilter(f);
+      return params.get('filter') || 'ALL';
+    }
+    return 'ALL';
+  });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
       const tId = params.get('id');
       if (tId) {
-        const found = tenants.find((t) => t.id === tId);
-        if (found) setSelectedTenant(found);
+        return tenants.find((t) => t.id === tId) || null;
       }
     }
-  }, [tenants]);
+    return null;
+  });
+  const [editingTenant, setEditingTenant] = useState<Tenant | null>(null);
+  const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
 
   const [reminderModalData, setReminderModalData] = useState<{
     tenant: Tenant;

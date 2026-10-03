@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { X, Building2, Plus, Check, MapPin, Users, IndianRupee, ArrowRight } from 'lucide-react';
+import { X, Building2, Plus, Check, MapPin } from 'lucide-react';
 import { useDataStore } from '@/services/useStore';
 import { Bed } from '@/types';
 
@@ -12,7 +11,7 @@ interface ManagePGsModalProps {
 }
 
 export function ManagePGsModal({ isOpen, onClose, onOpenAddPG }: ManagePGsModalProps) {
-  const { pgs, activePgId, setActivePG, getMetrics, getBeds, getTenants } = useDataStore();
+  const { pgs, activePgId, setActivePG, getMetrics, getBeds } = useDataStore();
 
   if (!isOpen) return null;
 

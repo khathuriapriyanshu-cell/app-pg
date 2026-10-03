@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PG Rent Autopilot</string>
+    <string name="title_activity_main">PG Rent Autopilot</string>
+    <string name="package_name">com.pgautopilot.app</string>
+    <string name="custom_url_scheme">com.pgautopilot.app</string>
+</resources>

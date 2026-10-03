@@ -1,7 +1,7 @@
 import assert from 'assert';
 
 // Import initial data and verify storage logic directly
-import { initialRentRecords, initialTenants, initialBeds, initialPayments, initialReceipts } from '../src/services/mockData.js';
+import { initialRentRecords, initialTenants, initialBeds } from '../src/services/mockData.ts';
 
 console.log('--- RUNNING RIGOROUS DOMAIN & BUSINESS LOGIC VERIFICATION ---');
 
@@ -33,7 +33,7 @@ assert(collectionRate > 0 && collectionRate <= 100, 'Collection rate must be bet
 // 3. Overdue Detection Check
 console.log('3. Checking Overdue Tenants...');
 const overdueRecords = octRecords.filter(r => r.status === 'OVERDUE');
-assert.strictEqual(overdueRecords.length, 3, 'Should have exactly 3 overdue tenants initially (Rahul, Aman, Deepak)');
+assert.strictEqual(overdueRecords.length, 4, 'Should have 4 overdue tenants across both PGs (3 in PG1, 1 in PG2)');
 const rahulRecord = overdueRecords.find(r => r.tenantId === 'tenant-rahul');
 assert(rahulRecord && rahulRecord.daysOverdue === 3, 'Rahul should be 3 days overdue');
 console.log('   Rahul is 3 days overdue (verified)');

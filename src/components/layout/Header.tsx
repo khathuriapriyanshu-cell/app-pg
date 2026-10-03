@@ -4,13 +4,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   Search,
   Bell,
-  Sparkles,
   Building2,
   ChevronDown,
   Plus,
   UserPlus,
   Check,
-  Layers,
 } from 'lucide-react';
 import { useDataStore } from '@/services/useStore';
 
@@ -47,7 +45,7 @@ export function Header({
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 py-2.5 sm:px-6">
+    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 py-2.5 sm:px-6 safe-top">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
         {/* PG Selector & Identity */}
         <div className="relative min-w-0" ref={dropdownRef}>
@@ -171,6 +169,7 @@ export function Header({
             onClick={onOpenAddStudent}
             className="flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-100 transition-all active:scale-95"
             title="Add a student and configure rent"
+            aria-label="Add a student and configure rent"
           >
             <UserPlus className="w-4 h-4" />
             <span className="hidden xs:inline sm:inline">Add Student</span>
@@ -181,6 +180,7 @@ export function Header({
             onClick={onOpenAddPG}
             className="hidden lg:flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
             title="Add a new PG property"
+            aria-label="Add a new PG property"
           >
             <Plus className="w-4 h-4 text-indigo-600" />
             <span>Add PG</span>
@@ -191,6 +191,7 @@ export function Header({
             onClick={onOpenSearch}
             className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200/80 text-slate-500 hover:text-slate-800 p-2 sm:px-3 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors border border-slate-200/60"
             title="Search tenants, rooms, or amounts"
+            aria-label="Search tenants, rooms, or amounts"
           >
             <Search className="w-4 h-4 text-slate-400" />
             <span className="hidden md:inline">Search...</span>
@@ -204,6 +205,7 @@ export function Header({
             onClick={onOpenNotifications}
             className="relative p-2 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 transition-colors"
             title="Notification Center"
+            aria-label={`Notification Center (${unreadCount} unread)`}
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (

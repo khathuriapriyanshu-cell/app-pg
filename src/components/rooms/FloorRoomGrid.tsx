@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { BedCard } from './BedCard';
-import { Floor, Room, Bed, Tenant } from '@/types';
+import { Bed, Tenant } from '@/types';
 import { useDataStore } from '@/services/useStore';
-import { DoorOpen, Layers, Plus } from 'lucide-react';
+import { Layers, Plus } from 'lucide-react';
 import { TenantProfileModal } from '../tenants/TenantProfileModal';
 import { AddTenantModal } from '../tenants/AddTenantModal';
 import { AddRoomModal } from './AddRoomModal';

@@ -7,8 +7,6 @@ import {
   Send,
   CreditCard,
   CheckCircle2,
-  Sparkles,
-  ExternalLink,
 } from 'lucide-react';
 import { Tenant, RentRecord } from '@/types';
 import { useDataStore } from '@/services/useStore';
@@ -67,7 +65,7 @@ export function ActionRequiredQueue() {
             <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 mx-auto flex items-center justify-center mb-3">
               <CheckCircle2 className="w-6 h-6" />
             </div>
-            <h4 className="font-bold text-slate-800 text-base">You're All Caught Up!</h4>
+            <h4 className="font-bold text-slate-800 text-base">You&apos;re All Caught Up!</h4>
             <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
               Zero pending or overdue rent records for this cycle. All tenant rents are collected in full.
             </p>

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { X, Printer, CheckCircle2, Building2, Download } from 'lucide-react';
+import { X, Printer, CheckCircle2, Building2 } from 'lucide-react';
 import { Receipt } from '@/types';
 import { useDataStore } from '@/services/useStore';
 
@@ -12,11 +12,12 @@ interface ReceiptModalProps {
 }
 
 export function ReceiptModal({ isOpen, receipt, onClose }: ReceiptModalProps) {
-  const { pg, getTenantById, getRoomById, getBedById, payments } = useDataStore();
+  const { pg, getPGById, getTenantById, getRoomById, getBedById, payments } = useDataStore();
 
   if (!isOpen || !receipt) return null;
 
   const tenant = getTenantById(receipt.tenantId);
+  const property = (tenant?.pgId ? getPGById(tenant.pgId) : null) || pg;
   const room = tenant ? getRoomById(tenant.roomId) : undefined;
   const bed = tenant ? getBedById(tenant.bedId) : undefined;
   const payment = payments.find((p) => p.id === receipt.paymentId);
@@ -56,10 +57,10 @@ export function ReceiptModal({ isOpen, receipt, onClose }: ReceiptModalProps) {
               <Building2 className="w-6 h-6" />
             </div>
             <h2 className="text-lg font-black tracking-tight text-slate-900 uppercase">
-              {pg.name}
+              {property.name}
             </h2>
             <p className="text-xs text-slate-500 max-w-xs mx-auto leading-relaxed mt-0.5">
-              {pg.address}
+              {property.address}
             </p>
             <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 rounded-full text-xs font-bold">
               <CheckCircle2 className="w-3.5 h-3.5" />

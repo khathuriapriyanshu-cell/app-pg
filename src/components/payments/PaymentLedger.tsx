@@ -4,13 +4,10 @@ import React, { useState } from 'react';
 import {
   CreditCard,
   Search,
-  Filter,
   FileText,
   CheckCircle2,
   AlertCircle,
   Clock,
-  Printer,
-  ExternalLink,
 } from 'lucide-react';
 import { useDataStore } from '@/services/useStore';
 import { Receipt, RentRecord, Tenant } from '@/types';
@@ -127,8 +124,103 @@ export function PaymentLedger() {
         </div>
       </div>
 
-      {/* Ledger Table (Desktop & Mobile-friendly) */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+      {/* Mobile Card View (sm:hidden) */}
+      <div className="space-y-3 sm:hidden">
+        {filteredRentRecords.length === 0 ? (
+          <div className="p-8 text-center text-slate-400 bg-white rounded-2xl border border-slate-200/80">
+            No payment records match the selected criteria.
+          </div>
+        ) : (
+          filteredRentRecords.map((record) => {
+            const tenant = tenants.find((t) => t.id === record.tenantId);
+            const room = tenant ? getRoomById(tenant.roomId) : null;
+            const bed = tenant ? getBedById(tenant.bedId) : null;
+            const payment = payments.find((p) => p.id === record.paymentId);
+            const hasReceipt = receipts.some((r) => r.rentRecordId === record.id);
+
+            return (
+              <div
+                key={record.id}
+                className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-3"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h4 className="font-extrabold text-sm text-slate-900">
+                      {tenant?.name || 'Tenant'}
+                    </h4>
+                    <p className="text-xs text-slate-500">
+                      Room {room?.roomNumber}-{bed?.bedNumber} · {record.month}
+                    </p>
+                  </div>
+                  <span
+                    className={`inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full font-bold ${
+                      record.status === 'PAID'
+                        ? 'bg-emerald-100 text-emerald-800'
+                        : record.status === 'OVERDUE'
+                        ? 'bg-rose-100 text-rose-800'
+                        : 'bg-amber-100 text-amber-800'
+                    }`}
+                  >
+                    {record.status === 'PAID' && <CheckCircle2 className="w-3 h-3" />}
+                    {record.status === 'OVERDUE' && <AlertCircle className="w-3 h-3" />}
+                    {record.status === 'PENDING' && <Clock className="w-3 h-3" />}
+                    {record.status === 'OVERDUE'
+                      ? `${record.daysOverdue}D Overdue`
+                      : record.status}
+                  </span>
+                </div>
+
+                <div className="flex items-baseline justify-between pt-2 border-t border-slate-100">
+                  <div>
+                    <span className="text-[11px] text-slate-400 block">Amount</span>
+                    <span className="text-base font-black text-slate-900">
+                      ₹{record.amount.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[11px] text-slate-400 block">Due Date</span>
+                    <span className="text-xs font-semibold text-slate-700">
+                      {record.dueDate}
+                    </span>
+                  </div>
+                </div>
+
+                {payment && (
+                  <div className="text-[11px] text-slate-500 bg-slate-50 p-2 rounded-xl flex items-center justify-between">
+                    <span>{payment.paymentMethod}</span>
+                    <span className="font-mono text-slate-400">{payment.transactionId}</span>
+                  </div>
+                )}
+
+                <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+                  {record.status === 'PAID' && hasReceipt ? (
+                    <button
+                      onClick={() => handleOpenReceipt(record)}
+                      className="w-full flex items-center justify-center gap-1.5 py-2 px-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-bold transition-colors"
+                    >
+                      <FileText className="w-4 h-4" />
+                      <span>View Receipt</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        tenant && setPaySimData({ tenant, rentRecord: record })
+                      }
+                      className="w-full flex items-center justify-center gap-1.5 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-colors"
+                    >
+                      <CreditCard className="w-4 h-4 text-indigo-600" />
+                      <span>Simulate Pay Link</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Desktop Ledger Table (hidden on mobile, visible on sm and up) */}
+      <div className="hidden sm:block bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs sm:text-sm">
             <thead className="bg-slate-50 border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
@@ -246,13 +338,14 @@ export function PaymentLedger() {
         </div>
       </div>
 
-      {/* Modals */}
+      {/* Digital Receipt Modal */}
       <ReceiptModal
         isOpen={Boolean(selectedReceipt)}
         receipt={selectedReceipt}
         onClose={() => setSelectedReceipt(null)}
       />
 
+      {/* Tenant Pay Link Simulation Modal */}
       <TenantPaymentSimulationModal
         isOpen={Boolean(paySimData)}
         tenant={paySimData?.tenant || null}

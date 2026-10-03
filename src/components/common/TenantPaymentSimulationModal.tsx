@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, ShieldCheck, CheckCircle2, QrCode, ArrowRight, Loader2, Sparkles, Building2 } from 'lucide-react';
+import { X, ShieldCheck, CheckCircle2, QrCode, ArrowRight, Loader2, Building2 } from 'lucide-react';
 import { RentRecord, Tenant } from '@/types';
 import { useDataStore } from '@/services/useStore';
 
@@ -25,10 +25,11 @@ export function TenantPaymentSimulationModal({
   const [isSuccess, setIsSuccess] = useState(false);
   const [txnDetails, setTxnDetails] = useState<{ txnId: string; receiptNo: string } | null>(null);
 
-  const { pg, recordVerifiedPayment, getRoomById, getBedById } = useDataStore();
+  const { pg, getPGById, recordVerifiedPayment, getRoomById, getBedById } = useDataStore();
 
   if (!isOpen || !rentRecord || !tenant) return null;
 
+  const property = (tenant.pgId ? getPGById(tenant.pgId) : null) || pg;
   const room = getRoomById(tenant.roomId);
   const bed = getBedById(tenant.bedId);
 
@@ -67,10 +68,11 @@ export function TenantPaymentSimulationModal({
               <Building2 className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-[10px] text-emerald-400 uppercase tracking-wider font-bold">
-                Tenant Payment Portal
+              <p className="text-[10px] text-amber-300 uppercase tracking-wider font-bold flex items-center gap-1">
+                <span>Tenant Payment Portal</span>
+                <span className="bg-amber-400/20 text-amber-200 px-1.5 py-0.5 rounded text-[9px]">Simulation Demo</span>
               </p>
-              <h3 className="font-extrabold text-sm">{pg.name}</h3>
+              <h3 className="font-extrabold text-sm">{property.name}</h3>
             </div>
           </div>
           <div className="mt-4 pt-3 border-t border-slate-800 flex items-baseline justify-between">
@@ -166,9 +168,9 @@ export function TenantPaymentSimulationModal({
               </div>
 
               {/* Security info */}
-              <div className="flex items-center gap-2 p-2.5 bg-emerald-50 rounded-xl text-[11px] text-emerald-800 border border-emerald-100">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>256-bit encrypted bank verification</span>
+              <div className="flex items-center gap-2 p-2.5 bg-amber-50 rounded-xl text-[11px] text-amber-900 border border-amber-200">
+                <ShieldCheck className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                <span>Sandbox Mode: Simulates webhook callback from UPI/Razorpay payment gateway.</span>
               </div>
 
               {/* Action Button */}
@@ -181,11 +183,11 @@ export function TenantPaymentSimulationModal({
                 {isProcessing ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Verifying with Bank...
+                    <span>Verifying with Payment Gateway...</span>
                   </>
                 ) : (
                   <>
-                    <span>Pay ₹{rentRecord.amount.toLocaleString('en-IN')} Now</span>
+                    <span>Simulate Verified Payment</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}

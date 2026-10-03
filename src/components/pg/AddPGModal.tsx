@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Building2, Plus, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+import { X, Building2, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 import { useDataStore } from '@/services/useStore';
 
 interface AddPGModalProps {

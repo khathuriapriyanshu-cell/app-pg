@@ -21,8 +21,6 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectTenant }: GlobalSea
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
-    } else {
-      setQuery('');
     }
   }, [isOpen]);
 
@@ -107,25 +105,25 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectTenant }: GlobalSea
                   onClick={() => setQuery('Priyanshu')}
                   className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs"
                 >
-                  "Priyanshu"
+                  &quot;Priyanshu&quot;
                 </button>
                 <button
                   onClick={() => setQuery('203')}
                   className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs"
                 >
-                  "203"
+                  &quot;203&quot;
                 </button>
                 <button
                   onClick={() => setQuery('8000')}
                   className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs"
                 >
-                  "8000"
+                  &quot;8000&quot;
                 </button>
               </div>
             </div>
           ) : !hasResults ? (
             <div className="py-8 text-center text-slate-400 text-xs sm:text-sm">
-              No results found for <span className="font-semibold text-slate-600">"{query}"</span>
+              No results found for <span className="font-semibold text-slate-600">&quot;{query}&quot;</span>
             </div>
           ) : (
             <>

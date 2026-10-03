@@ -5,15 +5,10 @@ import {
   X,
   Phone,
   Mail,
-  DoorOpen,
   Calendar,
-  IndianRupee,
   Shield,
   Send,
   CreditCard,
-  FileText,
-  Clock,
-  AlertTriangle,
   CheckCircle2,
   Edit3,
 } from 'lucide-react';
@@ -31,7 +26,7 @@ interface TenantProfileModalProps {
 }
 
 export function TenantProfileModal({ isOpen, tenant, onClose }: TenantProfileModalProps) {
-  const { getRoomById, getBedById, getTenantCurrentRent, payments, receipts, rentRecords } =
+  const { getRoomById, getBedById, getTenantCurrentRent, payments, receipts } =
     useDataStore();
 
   const [isReminderOpen, setIsReminderOpen] = useState(false);

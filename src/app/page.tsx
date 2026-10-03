@@ -10,7 +10,8 @@ import { AddRoomModal } from '@/components/rooms/AddRoomModal';
 import { AddPGModal } from '@/components/pg/AddPGModal';
 import { ManagePGsModal } from '@/components/pg/ManagePGsModal';
 import { useDataStore } from '@/services/useStore';
-import { Building2, Plus, Sparkles, CheckCircle2 } from 'lucide-react';
+import { PG } from '@/types';
+import { Building2, Plus } from 'lucide-react';
 
 export default function DashboardPage() {
   const { pgs, activePgId, setActivePG } = useDataStore();
@@ -43,7 +44,7 @@ export default function DashboardPage() {
           </button>
 
           {/* Individual PG pills */}
-          {pgs.map((property) => (
+          {pgs.map((property: PG) => (
             <button
               key={property.id}
               onClick={() => setActivePG(property.id)}

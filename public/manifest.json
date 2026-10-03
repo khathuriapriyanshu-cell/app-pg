@@ -1,0 +1,66 @@
+{
+  "name": "PG Rent Autopilot",
+  "short_name": "PG Autopilot",
+  "description": "Automated PG rent collection, room management, reminders, and digital receipts for PG owners.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["business", "finance", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Students & Rent",
+      "url": "/tenants",
+      "description": "View and manage PG students and rent"
+    },
+    {
+      "name": "Rooms & Beds",
+      "url": "/rooms",
+      "description": "View room occupancy"
+    },
+    {
+      "name": "Payments & Receipts",
+      "url": "/payments",
+      "description": "View rent payments and receipts"
+    },
+    {
+      "name": "Autopilot Rules",
+      "url": "/settings",
+      "description": "Configure reminder engine"
+    }
+  ]
+}
